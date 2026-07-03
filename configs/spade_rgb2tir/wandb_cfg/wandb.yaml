@@ -1,0 +1,8 @@
+wandb:
+  entity: "mustyrash"
+  project: "spade_rgb2tir"
+  name: "baseline"
+  tags: ["baseline", "clean spade-gan"]
+  group: "train"
+  resume: "allow"
+  notes: "Testing baseline under diffrent losses weights"
