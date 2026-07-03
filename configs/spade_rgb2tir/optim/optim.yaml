@@ -1,0 +1,11 @@
+optimizer:
+  generator:
+    name: adam
+    opt_params:
+      lr: 0.0002
+      betas: [0.5, 0.999]
+  discriminator:
+    name: adam
+    opt_params:
+      lr: 0.0002
+      betas: [0.0, 0.9]

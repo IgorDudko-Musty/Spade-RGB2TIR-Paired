@@ -1,0 +1,66 @@
+discriminator:
+
+  name: "ms_patchgan"
+  amount: 3
+
+  blocks:
+    - type: "down"
+      in_ch: 1
+      out_ch: 64
+      cfg: ${discr_cfg_strd_2}
+    
+    - type: "down"
+      in_ch: 64
+      out_ch: 128
+      cfg: ${discr_cfg_strd_2}
+    
+    - type: "down"
+      in_ch: 128
+      out_ch: 256
+      cfg: ${discr_cfg_strd_2}
+    
+    - type: "down"
+      in_ch: 256
+      out_ch: 512
+      cfg: ${discr_cfg_strd_1}
+    
+    - type: "down"
+      in_ch: 512
+      out_ch: 1
+      cfg: ${discr_cfg_strd_1}
+#    
+  discr_cfg_strd_2:
+    down_cfg:
+      conv:
+        kernel_size: 4
+        stride: 2
+        padding: 1
+        padding_mode: "reflect"
+        bias: False
+      norm:
+        type: "in"
+      act:
+        type: "leakyrelu"
+        negative_slope: 0.2
+    cbam_cfg:
+      enable: false
+      reduction: 16
+      kernel_size: 7
+
+  discr_cfg_strd_1:
+    down_cfg:
+      conv:
+        kernel_size: 4
+        stride: 1
+        padding: 1
+        padding_mode: "reflect"
+        bias: False
+      norm:
+        type: "ident"
+      act:
+        type: "leakyrelu"
+        negative_slope: 0.2
+    cbam_cfg:
+      enable: false
+      reduction: 16
+      kernel_size: 7

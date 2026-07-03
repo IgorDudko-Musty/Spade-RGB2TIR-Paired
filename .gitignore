@@ -1,0 +1,11 @@
+.vscode/
+
+wandb/
+
+.dvc/cache/
+.dvc/tmp/
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd

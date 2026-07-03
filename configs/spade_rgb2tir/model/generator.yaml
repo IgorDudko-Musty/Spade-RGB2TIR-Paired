@@ -1,0 +1,219 @@
+generator:
+
+  name: "spade"
+
+  down_blocks:
+    - type: "down"
+      in_ch: 3
+      out_ch: 32
+      cfg: ${down_cfg_7x7}
+
+    - type: "down_skip"
+      in_ch: 32
+      out_ch: 64
+      cfg: ${down_cfg_3x3}
+
+    - type: "down_skip"
+      in_ch: 64
+      out_ch: 128
+      cfg: ${down_cfg_3x3}
+
+    - type: "down_skip"
+      in_ch: 128
+      out_ch: 256
+      cfg: ${down_cfg_3x3}
+
+  spade_blocks:
+    - type: "spade_skip"
+      in_ch: 256
+      cmap_ch: 3
+      cfg: ${spade_cfg}
+
+    - type: "spade_skip"
+      in_ch: 256
+      cmap_ch: 3
+      cfg: ${spade_cfg}
+
+    - type: "spade_skip"
+      in_ch: 256
+      cmap_ch: 3
+      cfg: ${spade_cfg_atten}
+
+    - type: "spade_skip"
+      in_ch: 256
+      cmap_ch: 3
+      cfg: ${spade_cfg}
+
+    - type: "spade_skip"
+      in_ch: 256
+      cmap_ch: 3
+      cfg: ${spade_cfg}
+
+    - type: "spade_skip"
+      in_ch: 256
+      cmap_ch: 3
+      cfg: ${spade_cfg_atten}
+
+    - type: "spade_skip"
+      in_ch: 256
+      cmap_ch: 3
+      cfg: ${spade_cfg}
+
+    - type: "spade_skip"
+      in_ch: 256
+      cmap_ch: 3
+      cfg: ${spade_cfg}
+
+    - type: "spade_skip"
+      in_ch: 256
+      cmap_ch: 3
+      cfg: ${spade_cfg_atten}
+
+  up_blocks:
+    - type: "up_skip"
+      in_ch: 256
+      out_ch: 128
+      cfg: ${up_scale_cfg}
+
+    - type: "up_skip"
+      in_ch: 128
+      out_ch: 64
+      cfg: ${up_scale_cfg}
+
+    - type: "up_skip"
+      in_ch: 64
+      out_ch: 32
+      cfg: ${up_scale_cfg}
+
+    - type: "up"
+      in_ch: 32
+      out_ch: 1
+      cfg: ${up_cfg}
+
+  down_cfg_7x7:
+    down_cfg:
+      conv:
+        kernel_size: 7
+        stride: 1
+        padding: 3
+        padding_mode: "reflect"
+        bias: False
+      norm:
+        type: "in"
+      act:
+        type: "silu"
+    cbam_cfg:
+      enable: true
+      reduction: 16
+      kernel_size: 7
+
+  down_cfg_3x3:
+    down_cfg:
+      conv:
+        kernel_size: 3
+        stride: 2
+        padding: 1
+        padding_mode: "reflect"
+        bias: False
+      norm:
+        type: "in"
+      act:
+        type: "silu"
+    cbam_cfg:
+      enable: true
+      reduction: 16
+      kernel_size: 7
+
+  spade_cfg:
+    cmap_chs_out: [64, 128, 256]
+    condmap_cfg:
+      conv:
+        kernel_size: 3
+        stride: 2
+        padding: 1
+        padding_mode: "reflect"
+        bias: False
+      norm:
+        type: "ident"
+      act:
+        type: "silu"
+    gamma_beta_cfg:
+      conv:
+        kernel_size: 3
+        stride: 1
+        padding: 1
+        padding_mode: "reflect"
+        bias: False
+      norm:
+        type: "ident"
+      act:
+        type: "silu"
+    attention_cfg:
+      enable: false
+      reduction: 8
+      drop_prob: 0.1
+    
+  spade_cfg_atten:
+    cmap_chs_out: [64, 128, 256]
+    condmap_cfg:
+      conv:
+        kernel_size: 3
+        stride: 2
+        padding: 1
+        padding_mode: "reflect"
+        bias: False
+      norm:
+        type: "ident"
+      act:
+        type: "silu"
+    gamma_beta_cfg:
+      conv:
+        kernel_size: 3
+        stride: 1
+        padding: 1
+        padding_mode: "reflect"
+        bias: False
+      norm:
+        type: "ident"
+      act:
+        type: "silu"
+    attention_cfg:
+      enable: false
+      reduction: 8
+      drop_prob: 0.1
+
+  up_scale_cfg:
+    up_scale: 2
+    up_conv_cfg:
+      conv:
+        kernel_size: 3
+        stride: 1
+        padding: 1
+        padding_mode: "reflect"
+        bias: False
+      norm:
+        type: "ident"
+      act:
+        type: "silu"
+    cbam_cfg:
+      enable: true
+      reduction: 16
+      kernel_size: 7
+
+  up_cfg:
+    up_scale: 1
+    up_conv_cfg:
+      conv:
+        kernel_size: 3
+        stride: 1
+        padding: 1
+        padding_mode: "reflect"
+        bias: False
+      norm:
+        type: "ident"
+      act:
+        type: "tanh"
+    cbam_cfg:
+      enable: true
+      reduction: 16
+      kernel_size: 7

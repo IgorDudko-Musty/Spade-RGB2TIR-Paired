@@ -1,0 +1,17 @@
+losses:
+  gan:
+    name: "gan"
+    mode: "lsgan"        # или "vanilla", "hinge"
+    real_label: 1.0
+    fake_label: 0.0
+    weight: 1.0
+
+  l1:
+    name: "l1"
+    reduction: "mean"
+    weight: 0.5
+
+  fm:
+    name: "fm"
+    reduction: "mean"
+    weight: 0.5

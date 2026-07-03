@@ -1,0 +1,12 @@
+scheduler:
+  generator:
+    name: custom
+    params:
+      warmup: 5
+      total_epochs: 250
+
+  discriminator:
+    name: custom
+    params:
+      warmup: 5
+      total_epochs: 250

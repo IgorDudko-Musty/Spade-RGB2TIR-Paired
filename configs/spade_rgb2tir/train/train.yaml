@@ -1,0 +1,6 @@
+train:
+  epochs: 250
+  device: cuda
+  img_save_path: "./results_FLIR/" #null
+  checkpoint_save_path: null
+  # amp: true

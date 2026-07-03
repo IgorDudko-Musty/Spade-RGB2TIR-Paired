@@ -1,0 +1,5 @@
+data:
+  root: "/home/igordudko/datasets/DATA-REGISTRY/RGB2TIR_PAIRED/Aligned_FLIR_dataset_git/align/JPEGImages/"
+  batch_size: 1
+  shuffle: true
+  num_workers: 8
